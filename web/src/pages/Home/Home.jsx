@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { delay } from '../../utils/delay'
+
+import { Loader } from '../../components/Loader'
+
 import arrowIcon from '../../assets/icons/arrow.svg'
 import editIcon from '../../assets/icons/edit.svg'
 import trashIcon from '../../assets/icons/trash.svg'
@@ -11,6 +15,7 @@ export function Home () {
   const [contacts, setContacts] = useState([])
   const [orderBy, setOrderBy] = useState('ASC')
   const [searchTerm, setSearchTerm] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   const filteredContacts = useMemo(() => {
     return contacts.filter((contact) => {
@@ -19,14 +24,24 @@ export function Home () {
   }, [contacts, searchTerm])
 
   useEffect(() => {
+    setIsLoading(true)
+
     async function loadContacts () {
-      const response = await fetch(`
+      try {
+        const response = await fetch(`
         http://localhost:3001/contacts?orderBy=${orderBy}
       `)
 
-      const data = await response.json()
+        await delay()
 
-      return setContacts(data)
+        const data = await response.json()
+
+        setContacts(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setIsLoading(false)
+      }
     }
 
     loadContacts()
@@ -44,6 +59,8 @@ export function Home () {
 
   return (
     <Styled.Container>
+      <Loader isLoading={isLoading} />
+
       <Styled.InputSearchContainer>
         <input
           type="text"
