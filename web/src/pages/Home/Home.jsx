@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import arrowIcon from '../../assets/icons/arrow.svg'
@@ -12,9 +12,11 @@ export function Home () {
   const [orderBy, setOrderBy] = useState('ASC')
   const [searchTerm, setSearchTerm] = useState('')
 
-  const filteredContacts = contacts.filter((contact) => {
-    return contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  })
+  const filteredContacts = useMemo(() => {
+    return contacts.filter((contact) => {
+      return contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+    })
+  }, [contacts, searchTerm])
 
   useEffect(() => {
     async function loadContacts () {
