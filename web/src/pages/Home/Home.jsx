@@ -9,10 +9,13 @@ import * as Styled from './Home.styles'
 
 export function Home () {
   const [contacts, setContacts] = useState([])
+  const [orderBy, setOrderBy] = useState('ASC')
 
   useEffect(() => {
     async function loadContacts () {
-      const response = await fetch('http://localhost:3001/contacts')
+      const response = await fetch(`
+        http://localhost:3001/contacts?orderBy=${orderBy}
+      `)
 
       const data = await response.json()
 
@@ -20,7 +23,11 @@ export function Home () {
     }
 
     loadContacts()
-  }, [])
+  }, [orderBy])
+
+  function handleToggleOrderBy () {
+    setOrderBy((prevState) => prevState === 'ASC' ? 'DESC' : 'ASC')
+  }
 
   return (
     <Styled.Container>
@@ -36,9 +43,9 @@ export function Home () {
         <Link to="/new">Novo contato</Link>
       </Styled.Header>
 
-      <Styled.ListContainer>
+      <Styled.ListContainer orderBy={orderBy}>
         <header>
-          <button type='button'>
+          <button type='button' onClick={handleToggleOrderBy}>
             Nome
 
             <img src={arrowIcon} alt="Arrow" width={15} />

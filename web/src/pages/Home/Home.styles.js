@@ -53,7 +53,7 @@ export const Header = styled.header`
 `
 
 export const ListContainer = styled.div`
-  ${({ theme }) => css`
+  ${({ theme, orderBy }) => css`
     margin-top: 24px;
 
     header {
@@ -67,6 +67,11 @@ export const ListContainer = styled.div`
         gap: 8px;
         color: ${theme.colors.primary.main};
         font-weight: bold;
+
+        img {
+          transform: ${orderBy === 'ASC' ? 'rotate(180deg)' : 'rotate(0)'};
+          transition: transform 0.2s ease-in;
+        }
       }
     }
   `}
