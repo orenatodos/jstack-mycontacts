@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const TextField = styled.input`
-  ${({ theme }) => css`
+  ${({ theme, error }) => css`
     width: 100%;
     background: #FFF;
     border: 2px solid transparent;
@@ -15,5 +15,10 @@ export const TextField = styled.input`
     &:focus {
       border-color: ${theme.colors.primary.main};
     }
+
+    ${!!error && css`
+      color: ${theme.colors.danger.main};
+      border-color: ${theme.colors.danger.main} !important;
+    `}
   `}
 `
