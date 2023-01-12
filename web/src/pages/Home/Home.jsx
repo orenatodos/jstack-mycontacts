@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import arrowIcon from '../../assets/icons/arrow.svg'
@@ -7,6 +8,20 @@ import trashIcon from '../../assets/icons/trash.svg'
 import * as Styled from './Home.styles'
 
 export function Home () {
+  const [contacts, setContacts] = useState([])
+
+  useEffect(() => {
+    async function loadContacts () {
+      const response = await fetch('http://localhost:3001/contacts')
+
+      const data = await response.json()
+
+      return setContacts(data)
+    }
+
+    loadContacts()
+  }, [])
+
   return (
     <Styled.Container>
       <Styled.InputSearchContainer>
@@ -14,7 +29,9 @@ export function Home () {
       </Styled.InputSearchContainer>
 
       <Styled.Header>
-        <strong>3 contatos</strong>
+        <strong>
+          {contacts.length === 1 ? ' contato' : ' contatos'}
+        </strong>
 
         <Link to="/new">Novo contato</Link>
       </Styled.Header>
@@ -28,27 +45,31 @@ export function Home () {
           </button>
         </header>
 
-        <Styled.Card>
-          <div className='info'>
-            <div className="contact-name">
-              <strong>Renato Silva</strong>
-              <small>Instagram</small>
+        {contacts.map((contact) => (
+          <Styled.Card key={contact.id}>
+            <div className='info'>
+              <div className="contact-name">
+                <strong>{contact.name}</strong>
+                {contact.category_name && (
+                  <small>{contact.category_name}</small>
+                )}
+              </div>
+
+              <span>{contact.email}</span>
+              <span>{contact.phone}</span>
             </div>
 
-            <span>orenatodos@gmail.com</span>
-            <span>(11) 99999-9999</span>
-          </div>
+            <div className="actions">
+              <Link to={`/edit/${contact.id}`}>
+                <img src={editIcon} alt="Edit" width={20} />
+              </Link>
 
-          <div className="actions">
-            <Link to="/edit/123">
-              <img src={editIcon} alt="Edit" width={20} />
-            </Link>
-
-            <button type="button">
-              <img src={trashIcon} alt="Delete" width={20} />
-            </button>
-          </div>
-        </Styled.Card>
+              <button type="button">
+                <img src={trashIcon} alt="Delete" width={20} />
+              </button>
+            </div>
+          </Styled.Card>
+        ))}
       </Styled.ListContainer>
     </Styled.Container>
   )
