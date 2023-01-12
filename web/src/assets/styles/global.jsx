@@ -10,6 +10,7 @@ export const GlobalStyles = createGlobalStyle`
 
     body {
       background: ${theme.colors.background};
+      color: ${theme.colors.gray[900]};
     }
 
     body,

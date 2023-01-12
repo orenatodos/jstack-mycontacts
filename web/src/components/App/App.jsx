@@ -1,6 +1,7 @@
 import { ThemeProvider } from 'styled-components'
 
 import { Header } from '../Header'
+import { ContactList } from '../ContactList'
 
 import { GlobalStyles } from '../../assets/styles/global'
 import { defaultTheme } from '../../assets/styles/themes'
@@ -14,6 +15,7 @@ export function App () {
 
       <Styled.Container>
         <Header />
+        <ContactList />
       </Styled.Container>
     </ThemeProvider>
   )
