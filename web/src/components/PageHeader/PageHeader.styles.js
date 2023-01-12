@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components'
 
 export const Container = styled.header`
   ${({ theme }) => css`
+    margin-bottom: 24px;
+
     a {
       display: inline-flex;
       align-items: center;
