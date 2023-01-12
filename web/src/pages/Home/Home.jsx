@@ -10,6 +10,11 @@ import * as Styled from './Home.styles'
 export function Home () {
   const [contacts, setContacts] = useState([])
   const [orderBy, setOrderBy] = useState('ASC')
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const filteredContacts = contacts.filter((contact) => {
+    return contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  })
 
   useEffect(() => {
     async function loadContacts () {
@@ -29,30 +34,44 @@ export function Home () {
     setOrderBy((prevState) => prevState === 'ASC' ? 'DESC' : 'ASC')
   }
 
+  function handleChangeSearchTerm (event) {
+    const { value } = event.target
+
+    setSearchTerm(value)
+  }
+
   return (
     <Styled.Container>
       <Styled.InputSearchContainer>
-        <input type="text" placeholder='Pesquisar contato...'/>
+        <input
+          type="text"
+          placeholder='Pesquisar contato...'
+          value={searchTerm}
+          onChange={handleChangeSearchTerm}
+        />
       </Styled.InputSearchContainer>
 
       <Styled.Header>
         <strong>
-          {contacts.length === 1 ? ' contato' : ' contatos'}
+          {filteredContacts.length}
+          {filteredContacts.length === 1 ? ' contato' : ' contatos'}
         </strong>
 
         <Link to="/new">Novo contato</Link>
       </Styled.Header>
 
       <Styled.ListContainer orderBy={orderBy}>
-        <header>
-          <button type='button' onClick={handleToggleOrderBy}>
-            Nome
+        {filteredContacts.length > 0 && (
+          <header>
+            <button type='button' onClick={handleToggleOrderBy}>
+              Nome
 
-            <img src={arrowIcon} alt="Arrow" width={15} />
-          </button>
-        </header>
+              <img src={arrowIcon} alt="Arrow" width={15} />
+            </button>
+          </header>
+        )}
 
-        {contacts.map((contact) => (
+        {filteredContacts.map((contact) => (
           <Styled.Card key={contact.id}>
             <div className='info'>
               <div className="contact-name">
