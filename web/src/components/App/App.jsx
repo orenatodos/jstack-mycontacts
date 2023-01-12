@@ -1,7 +1,9 @@
 import { ThemeProvider } from 'styled-components'
+import { BrowserRouter } from 'react-router-dom'
 
 import { Header } from '../Header'
-import { ContactList } from '../ContactList'
+
+import { Routes } from '../../Routes'
 
 import { GlobalStyles } from '../../assets/styles/global'
 import { defaultTheme } from '../../assets/styles/themes'
@@ -10,13 +12,15 @@ import * as Styled from './App.styles'
 
 export function App () {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyles />
+    <BrowserRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <GlobalStyles />
 
-      <Styled.Container>
-        <Header />
-        <ContactList />
-      </Styled.Container>
-    </ThemeProvider>
+        <Styled.Container>
+          <Header />
+          <Routes />
+        </Styled.Container>
+      </ThemeProvider>
+    </BrowserRouter>
   )
 }
