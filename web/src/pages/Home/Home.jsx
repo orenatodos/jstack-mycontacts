@@ -11,6 +11,7 @@ import editIcon from '../../assets/icons/edit.svg'
 import trashIcon from '../../assets/icons/trash.svg'
 import sadImage from '../../assets/images/sad.svg'
 import emptyBoxImage from '../../assets/images/empty-box.svg'
+import magnifierQuestionImage from '../../assets/images/magnifier-question.svg'
 
 import * as Styled from './Home.styles'
 
@@ -120,6 +121,21 @@ export function Home () {
                 Clique no botão <strong>”Novo contato”</strong> à cima para cadastrar o seu primeiro!
               </p>
             </Styled.EmptyListContainer>
+          )}
+
+          {(!!contacts.length && filteredContacts.length < 1) && (
+            <Styled.SearchNotFoundContainer>
+              <img
+                src={magnifierQuestionImage}
+                alt="Magnifier question"
+                width={58}
+                height={58}
+              />
+
+              <p>
+                Nenhum resultado foi encontrado para <strong>”{searchTerm}”</strong>.
+              </p>
+            </Styled.SearchNotFoundContainer>
           )}
 
           <Styled.ListContainer orderBy={orderBy}>
