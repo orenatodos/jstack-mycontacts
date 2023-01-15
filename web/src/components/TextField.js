@@ -21,6 +21,13 @@ export const TextField = styled.input`
       border-color: ${theme.colors.primary.main};
     }
 
+    &:disabled {
+      background: ${theme.colors.gray[100]};
+      border-color: ${theme.colors.gray[200]};
+      color: ${theme.colors.gray[900]};
+      cursor: default;
+    }
+
     ${!!error && css`
       color: ${theme.colors.danger.main};
       border-color: ${theme.colors.danger.main} !important;

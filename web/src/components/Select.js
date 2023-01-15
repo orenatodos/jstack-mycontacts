@@ -21,8 +21,8 @@ export const Select = styled.select`
     &:disabled {
       background: ${theme.colors.gray[100]};
       border-color: ${theme.colors.gray[200]};
-      color: ${theme.colors.gray[900]};
       cursor: default;
+      opacity: 1;
     }
   `}
 `
