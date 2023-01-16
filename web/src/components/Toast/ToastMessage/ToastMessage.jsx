@@ -40,7 +40,6 @@ export function ToastMessage ({ message, onRemoveMessage }) {
 }
 
 ToastMessage.propTypes = {
-  children: PropTypes.node.isRequired,
   message: PropTypes.shape({
     type: PropTypes.oneOf(['default', 'success', 'danger']),
     id: PropTypes.number.isRequired,
