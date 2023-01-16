@@ -8,11 +8,13 @@ export function Button ({
   children,
   disabled,
   isLoading,
+  danger,
   ...props
 }) {
   return (
     <Styled.Button
       type="button"
+      danger={danger}
       disabled={disabled || isLoading}
       {...props}
     >
@@ -25,10 +27,12 @@ export function Button ({
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  danger: PropTypes.bool
 }
 
 Button.defaultProps = {
   isDisabled: false,
-  isLoading: false
+  isLoading: false,
+  danger: false
 }
