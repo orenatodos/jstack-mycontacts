@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types'
 
 import { useErrors } from '../../hooks/useErrors'
+import { useSafeAsyncState } from '../../hooks/useSafeAsyncState'
 
 import { formatPhone } from '../../utils/formatPhone'
 import { isEmailValid } from '../../utils/isEmailValid'
@@ -31,8 +32,8 @@ export const ContactForm = forwardRef((
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [categoryId, setCategoryId] = useState('')
-  const [categories, setCategories] = useState([])
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [categories, setCategories] = useSafeAsyncState([])
+  const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
@@ -71,7 +72,7 @@ export const ContactForm = forwardRef((
     }
 
     loadCategories()
-  }, [])
+  }, [setCategories, setIsLoadingCategories])
 
   function handleNameChange (event) {
     const { value } = event.target
