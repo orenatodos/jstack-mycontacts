@@ -6,12 +6,22 @@ class ContactsService {
     this.httpClient = new HttpClient('http://localhost:3001')
   }
 
-  async listContacts (orderBy = 'ASC') {
+  getContactById (id) {
+    return this.httpClient.get(`/contacts/${id}`)
+  }
+
+  listContacts (orderBy = 'ASC') {
     return this.httpClient.get(`/contacts?orderBy=${orderBy}`)
   }
 
-  async createContact (contact) {
+  createContact (contact) {
     return this.httpClient.post('/contacts', {
+      body: contact
+    })
+  }
+
+  updateContact (id, contact) {
+    return this.httpClient.put(`/contacts/${id}`, {
       body: contact
     })
   }
