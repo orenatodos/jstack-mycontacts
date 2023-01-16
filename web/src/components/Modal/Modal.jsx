@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { Button } from '../Button'
+import { ReactPortal } from '../ReactPortal'
 
 import * as Styled from './Modal.styles'
 
@@ -20,37 +20,38 @@ export function Modal ({
     return null
   }
 
-  return ReactDOM.createPortal(
-    <Styled.Overlay>
-      <Styled.Container danger={danger}>
-        <h1>{title}</h1>
+  return (
+    <ReactPortal containerId='modal-root'>
+      <Styled.Overlay>
+        <Styled.Container danger={danger}>
+          <h1>{title}</h1>
 
-        <div className="modal-body">
-          {children}
-        </div>
+          <div className="modal-body">
+            {children}
+          </div>
 
-        <Styled.Footer>
-          <button
-            type="button"
-            className='cancel-button'
-            onClick={onCancel}
-            disabled={isLoading}
-          >
-            {cancelLabel}
-          </button>
+          <Styled.Footer>
+            <button
+              type="button"
+              className='cancel-button'
+              onClick={onCancel}
+              disabled={isLoading}
+            >
+              {cancelLabel}
+            </button>
 
-          <Button
-            type="button"
-            danger={danger}
-            onClick={onConfirm}
-            isLoading={isLoading}
-          >
-            {confirmLabel}
-          </Button>
-        </Styled.Footer>
-      </Styled.Container>
-    </Styled.Overlay>,
-    document.getElementById('fullscreen-root')
+            <Button
+              type="button"
+              danger={danger}
+              onClick={onConfirm}
+              isLoading={isLoading}
+            >
+              {confirmLabel}
+            </Button>
+          </Styled.Footer>
+        </Styled.Container>
+      </Styled.Overlay>
+    </ReactPortal>
   )
 }
 

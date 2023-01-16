@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { Spinner } from '../Spinner'
+import { ReactPortal } from '../ReactPortal'
 
 import * as Styled from './Loader.styles'
 
@@ -10,11 +10,12 @@ export function Loader ({ isLoading }) {
     return null
   }
 
-  return ReactDOM.createPortal(
-    <Styled.Overlay>
-      <Spinner size={90} />
-    </Styled.Overlay>,
-    document.getElementById('fullscreen-root')
+  return (
+    <ReactPortal containerId='loader-root'>
+      <Styled.Overlay>
+        <Spinner size={90} />
+      </Styled.Overlay>
+    </ReactPortal>
   )
 }
 
