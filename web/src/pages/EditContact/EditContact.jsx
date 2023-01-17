@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
+import { useSafeAsyncAction } from '../../hooks/useSafeAsyncAction'
+
 import ContactsService from '../../services/ContactsService'
 
 import { toast } from '../../utils/toast'
@@ -17,29 +19,36 @@ export function EditContact () {
 
   const { id } = useParams()
   const history = useHistory()
+  const safeAsyncAction = useSafeAsyncAction()
 
   useEffect(() => {
     async function loadContact () {
       try {
         const contact = await ContactsService.getContactById(id)
 
-        setContactName(contact.name)
+        safeAsyncAction(() => {
+          setContactName(contact.name)
 
-        contactFormRef.current.setFieldsValue(contact)
+          contactFormRef.current.setFieldsValue(contact)
 
-        setIsLoading(false)
+          setIsLoading(false)
+        })
       } catch {
-        history.push('/')
+        safeAsyncAction(() => {
+          history.push('/')
 
-        toast({
-          type: 'danger',
-          text: 'Contato não encontrado!'
+          toast({
+            type: 'danger',
+            text: 'Contato não encontrado!'
+          })
+
+          setIsLoading(false)
         })
       }
     }
 
     loadContact()
-  }, [id, history])
+  }, [id, history, safeAsyncAction])
 
   async function handleSubmit ({
     name,
