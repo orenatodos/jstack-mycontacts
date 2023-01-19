@@ -7,11 +7,9 @@ import ContactsService from '../../services/ContactsService'
 
 import { toast } from '../../utils/toast'
 
-import { ContactForm } from '../../components/ContactForm'
-import { Loader } from '../../components/Loader'
-import { PageHeader } from '../../components/PageHeader'
+import { EditContactPresentation } from './EditContact.presentation'
 
-export function EditContact () {
+export function EditContactContainer () {
   const [isLoading, setIsLoading] = useState(true)
   const [contactName, setContactName] = useState('')
 
@@ -72,22 +70,11 @@ export function EditContact () {
   }
 
   return (
-    <>
-      <Loader isLoading={isLoading} />
-
-      <PageHeader
-        title={
-          isLoading
-            ? 'Carregando...'
-            : `Editar ${contactName}`
-        }
-      />
-
-      <ContactForm
-        ref={contactFormRef}
-        buttonLabel='Salvar alterações'
-        onSubmit={handleSubmit}
-      />
-    </>
+    <EditContactPresentation
+      isLoading={isLoading}
+      contactName={contactName}
+      contactFormRef={contactFormRef}
+      onSubmit={handleSubmit}
+    />
   )
 }
