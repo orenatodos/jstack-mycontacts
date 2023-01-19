@@ -50,20 +50,8 @@ export function EditContact () {
     loadContact()
   }, [id, history, safeAsyncAction])
 
-  async function handleSubmit ({
-    name,
-    email,
-    phone,
-    categoryId
-  }) {
+  async function handleSubmit (contact) {
     try {
-      const contact = {
-        name,
-        email,
-        phone,
-        category_id: categoryId
-      }
-
       const updatedContact = await ContactsService.updateContact(
         id,
         contact

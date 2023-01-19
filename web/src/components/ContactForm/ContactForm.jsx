@@ -50,7 +50,7 @@ export const ContactForm = forwardRef((
       setName(contact.name ?? '')
       setEmail(contact.email ?? '')
       setPhone(formatPhone(contact.phone) ?? '')
-      setCategoryId(contact.category_id ?? '')
+      setCategoryId(contact.category.id ?? '')
     },
     resetFields: () => {
       setName('')
