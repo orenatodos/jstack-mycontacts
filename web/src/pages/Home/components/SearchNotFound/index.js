@@ -1,0 +1,1 @@
+export { SearchNotFound } from './SearchNotFound'
