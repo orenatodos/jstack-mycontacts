@@ -30,6 +30,7 @@ export function useHome () {
       setContacts(contactList)
     } catch {
       setHasError(true)
+      setContacts([])
     } finally {
       setIsLoading(false)
     }
